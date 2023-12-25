@@ -21,6 +21,7 @@ public class User extends AbstractPersistable<Long> {
     private Boolean deleted;
     private Date created;
     private Date deletedDate;
+    private String password;
 
     @OneToMany
     private List<UserToRoles> roles;
