@@ -14,6 +14,6 @@ import java.util.List;
 public class Role extends AbstractPersistable<Long> {
     private String role;
 
-    @ManyToMany(mappedBy = "rolesList")
+    @OneToMany
     private List<User> userList;
 }

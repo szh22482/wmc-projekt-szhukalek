@@ -15,8 +15,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "Tb_User")
 public class User extends AbstractPersistable<Long> {
-    private String Vorname;
-    private String Nachname;
+    private String vorname;
+    private String nachname;
     private String email;
     private Boolean deleted;
     private Date created;

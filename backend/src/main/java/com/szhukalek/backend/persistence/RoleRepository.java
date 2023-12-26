@@ -11,5 +11,5 @@ public interface RoleRepository extends Repository<Role, Long> {
     void save(Role role);
     List<Role> findAll();
     Role findById(Long id);
-    Role findByName(ERoles name);
+    Role findByRole(ERoles name);
 }
