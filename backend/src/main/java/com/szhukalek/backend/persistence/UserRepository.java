@@ -2,6 +2,7 @@ package com.szhukalek.backend.persistence;
 
 import com.szhukalek.backend.model.User;
 import org.springframework.data.repository.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;

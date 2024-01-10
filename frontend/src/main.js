@@ -13,6 +13,10 @@ import App from './App.vue'
 // Composables
 import { createApp } from 'vue'
 
+import axios from "axios";
+
+axios.defaults.baseURL = process.env.NODE_ENV == 'production' ? "/api" : "https://localhost:8080/api";
+
 const app = createApp(App)
 
 registerPlugins(app)

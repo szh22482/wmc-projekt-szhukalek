@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "Tb_User2Rollen")
+@Table(name = "tb_user2rollen")
 public class UserToRoles {
 
     @Id

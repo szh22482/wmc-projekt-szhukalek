@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "Tb_Rollen")
+@Table(name = "tb_rollen")
 public class Role extends AbstractPersistable<Long> {
     private String role;
 

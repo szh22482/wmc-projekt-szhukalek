@@ -13,7 +13,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "Tb_User")
+@Table(name = "tb_user")
 public class User extends AbstractPersistable<Long> {
     private String vorname;
     private String nachname;
