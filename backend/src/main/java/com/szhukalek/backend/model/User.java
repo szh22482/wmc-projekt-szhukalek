@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -23,7 +24,11 @@ public class User extends AbstractPersistable<Long> {
     private Date deletedDate;
     private String password;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<UserToRoles> roles;
+
+    public List<String> getRoles() {
+        return roles.stream().map(r -> r.getRole().getRole().toString()).collect(Collectors.toList());
+    }
 
 }

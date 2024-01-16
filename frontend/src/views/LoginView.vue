@@ -44,6 +44,7 @@ export default {
         })
         if(response.status === 200) {
           console.log("Login successful!")
+          this.$router.push({name: 'Home'})
         } else {
           console.log("Login unsuccessgful")
         }

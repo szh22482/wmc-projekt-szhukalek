@@ -1,5 +1,6 @@
 package com.szhukalek.backend.controller;
 
+import com.szhukalek.backend.dto.UserDTO;
 import com.szhukalek.backend.model.User;
 import com.szhukalek.backend.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -28,5 +32,21 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong Password");
         }
         return ResponseEntity.status(HttpStatus.OK).body("Login Successful");
+    }
+
+    @GetMapping("/all")
+    public List<UserDTO> listAll() {
+        try {
+            List<User> users = userRepository.findAll();
+            List<UserDTO> dtos = new ArrayList<>();
+            users.forEach(user -> {
+                if(!user.getDeleted()) {
+                    dtos.add(new UserDTO(user.getId(), user.getEmail(), user.getVorname(), user.getNachname(), user.getCreated(), user.getRoles()));
+                }
+            });
+            return dtos;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

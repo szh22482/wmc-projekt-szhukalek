@@ -12,8 +12,9 @@ import java.util.List;
 @Setter
 @Table(name = "tb_rollen")
 public class Role extends AbstractPersistable<Long> {
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private ERoles role;
 
-    @OneToMany
-    private List<User> userList;
+    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
+    private List<UserToRoles> userList;
 }
