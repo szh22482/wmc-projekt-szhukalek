@@ -23,10 +23,28 @@
         <v-icon
           size="small"
           class="me-2"
-          @click="editItem(item)"
+          @click="openDialog(item)"
         >
           mdi-pencil
         </v-icon>
+
+        <v-dialog v-model="dialog" max-width="600">
+          <v-card>
+            <v-card-title>
+              Benutzer bearbeiten
+            </v-card-title>
+            <v-card-text>
+              <v-form @submit.prevent="saveChanges">
+                <v-text-field v-model="editedUser.vorname" label="Vorname"></v-text-field>
+                <v-text-field v-model="editedUser.nachname" label="Nachname"></v-text-field>
+                <v-text-field v-model="editedUser.email" label="E-Mail"></v-text-field>
+                <v-text-field v-model="editedUser.password" label="Passwort" type="password"></v-text-field>
+                <v-btn type="submit" color="primary">Änderungen speichern</v-btn>
+              </v-form>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+
         <v-icon
           size="small"
           @click="deleteItem(item)"
@@ -65,7 +83,15 @@
           {title: "Roles", key: "roles"},
           {title: "Actions", key: "actions"},
         ],
-        users: []
+        users: [],
+        dialog: false,
+        selectedUser: null,
+        editedUser: {
+          vorname: '',
+          nachname: '',
+          email: '',
+          password: '',
+        }
       }
     },
     async mounted() {
