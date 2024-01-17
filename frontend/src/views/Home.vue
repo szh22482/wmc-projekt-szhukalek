@@ -1,31 +1,49 @@
 <template>
-  <v-container class="main-con">
-    <v-data-table :items="users">
-      <template v-slot:headers="props">
-        <thead>
-        <tr>
-          <th v-for="header in props.headers" :key="header.text">
-            {{ header.text }}
-          </th>
-        </tr>
-        </thead>
+  <v-card
+    flat
+    title="Users"
+  >
+    <template v-slot:text>
+      <v-text-field
+        v-model="search"
+        label="Search"
+        prepend-inner-icon="mdi-magnify"
+        single-line
+        variant="outlined"
+        hide-details
+      ></v-text-field>
+    </template>
+
+    <v-data-table
+      :headers="headers"
+      :items="users"
+      :search="search"
+    >
+      <template v-slot:item.actions="{ item }">
+        <v-icon
+          size="small"
+          class="me-2"
+          @click="editItem(item)"
+        >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+          size="small"
+          @click="deleteItem(item)"
+        >
+          mdi-delete
+        </v-icon>
       </template>
-      <template v-slot:items="props">
-        <tbody>
-        <tr v-for="item in props.items" :key="item.id">
-          <td>{{ item.vorname }}</td>
-          <td>{{ item.nachname }}</td>
-          <td>{{ item.email }}</td>
-          <!-- Füge weitere Spalten hier hinzu -->
-          <td>{{ item.roles.join(', ') }}</td> <!-- Beispiel für Rollen -->
-          <td>
-            <v-btn @click="handleButtonClick(item)">Button</v-btn>
-          </td>
-        </tr>
-        </tbody>
+      <template v-slot:no-data>
+        <v-btn
+          color="primary"
+          @click="initialize"
+        >
+          Reset
+        </v-btn>
       </template>
     </v-data-table>
-  </v-container>
+  </v-card>
 </template>
 
 <script setup>
@@ -38,6 +56,15 @@
   export default {
     data() {
       return {
+        search: '',
+        headers: [
+          {title: "ID", key: "id"},
+          {title: "Firstname", key: "firstname"},
+          {title: "Lastname", key: "lastname"},
+          {title: "Created", key: "created"},
+          {title: "Roles", key: "roles"},
+          {title: "Actions", key: "actions"},
+        ],
         users: []
       }
     },
