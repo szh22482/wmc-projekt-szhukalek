@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -49,4 +50,22 @@ public class UserController {
             return null;
         }
     }
+
+    @PutMapping("update/{id}")
+    public @ResponseStatus ResponseEntity update(@PathVariable final Long id, @RequestBody UserDTO userDTO) {
+        try {
+            User user = userRepository.findById(id);
+            if(user != null) {
+                user.setVorname(userDTO.firstname());
+                user.setNachname(userDTO.lastname());
+                user.setEmail(userDTO.email());
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+        return null;
+    }
+
+
 }
