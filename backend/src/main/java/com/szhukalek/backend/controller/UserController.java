@@ -27,17 +27,7 @@ public class UserController {
 
     @GetMapping("/login")
     public ResponseEntity<?> login(@RequestParam("email") String email, @RequestParam("password") String password) {
-        User user = userRepository.findByEmail(email);
-        System.out.println(user);
-
-        if(user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Email");
-        }
-
-        if(!user.getPassword().equals(password)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong Password");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body("Login Successful");
+        return userService.loginUser(email, password);
     }
 
     @GetMapping("/all")
