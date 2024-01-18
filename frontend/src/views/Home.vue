@@ -106,7 +106,7 @@ export default {
   },
   async mounted() {
     try {
-      const response = await axios.get("/users/all");
+      const response = await axios.get("/users/all", {responseType: 'application/json'});
       if (response != null) {
         this.users = response.data;
         console.log(this.users, response)

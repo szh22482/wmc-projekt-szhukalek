@@ -3,6 +3,8 @@ package com.szhukalek.backend.controller;
 import com.szhukalek.backend.dto.UserDTO;
 import com.szhukalek.backend.model.User;
 import com.szhukalek.backend.persistence.UserRepository;
+import com.szhukalek.backend.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "localhost:3000", allowCredentials = "true")
 public class UserController {
+
+    private final UserService userService;
     @Autowired
     private UserRepository userRepository;
 
@@ -37,18 +42,7 @@ public class UserController {
 
     @GetMapping("/all")
     public List<UserDTO> listAll() {
-        try {
-            List<User> users = userRepository.findAll();
-            List<UserDTO> dtos = new ArrayList<>();
-            users.forEach(user -> {
-                if(!user.getDeleted()) {
-                    dtos.add(new UserDTO(user.getId(), user.getEmail(), user.getVorname(), user.getNachname(), user.getCreated(), user.getRoles()));
-                }
-            });
-            return dtos;
-        } catch (Exception e) {
-            return null;
-        }
+       return userService.fetchAllUsers();
     }
 
     @PutMapping("update/{id}")
