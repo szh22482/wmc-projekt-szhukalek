@@ -136,7 +136,7 @@ export default {
       };
 
       // Beispiel für Axios-Anfrage (du musst dies an deine API anpassen)
-      axios.put(`/users/${this.selectedUser.id}`, updatedUser)
+      axios.put(`/users/update/${this.selectedUser.id}`, updatedUser)
         .then(response => {
           // Erfolgreiche Antwort vom Server
           console.log(response.data);

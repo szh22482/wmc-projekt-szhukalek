@@ -13,7 +13,8 @@ public record UserDTO(Long id,
                       String firstname,
                       String lastname,
                       Date created,
-                      List<String> roles) {
+                      List<String> roles,
+                      String password) {
 
     public static UserDTO fromEntity(User entity) {
         return UserDTO.builder()
@@ -23,6 +24,7 @@ public record UserDTO(Long id,
                 .lastname(entity.getNachname())
                 .created(entity.getCreated())
                 .roles(entity.getRoles())
+                .password(entity.getPassword())
                 .build();
     }
 }

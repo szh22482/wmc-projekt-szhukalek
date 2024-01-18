@@ -45,6 +45,16 @@ public class UserService {
         return user.getPassword().equals(password);
     }
 
+    public UserDTO updateUser(Long id, UserDTO updatedUser) {
+        User existingUser = userRepository.findById(id);
+
+        if(existingUser == null) {
+            return null;
+        }
+
+        return null;
+    }
+
     public UserDTO fetchUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
         return user != null ? UserDTO.fromEntity(user) : null;
