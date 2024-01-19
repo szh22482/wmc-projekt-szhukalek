@@ -37,18 +37,7 @@ public class UserController {
 
     @PutMapping("update/{id}")
     public @ResponseStatus ResponseEntity update(@PathVariable final Long id, @RequestBody UserDTO userDTO) {
-        try {
-            User user = userRepository.findById(id);
-            if(user != null) {
-                user.setVorname(userDTO.firstname());
-                user.setNachname(userDTO.lastname());
-                user.setEmail(userDTO.email());
-            }
-
-        } catch (Exception e) {
-            return null;
-        }
-        return null;
+        return userService.updateUser(id, userDTO);
     }
 
 

@@ -2,6 +2,7 @@ package com.szhukalek.backend.service;
 
 import com.szhukalek.backend.dto.UserDTO;
 import com.szhukalek.backend.model.User;
+import com.szhukalek.backend.persistence.RoleRepository;
 import com.szhukalek.backend.persistence.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -19,6 +21,8 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private RoleRepository roleRepository;
+
     public List<UserDTO> fetchAllUsers() {
         return userRepository.findAll()
                 .stream()
@@ -45,14 +49,21 @@ public class UserService {
         return user.getPassword().equals(password);
     }
 
-    public UserDTO updateUser(Long id, UserDTO updatedUser) {
-        User existingUser = userRepository.findById(id);
+    public ResponseEntity<String> updateUser(Long id, UserDTO updatedUser) {
+        LocalDate localDate = LocalDate.now();
+        User user = userRepository.findById(id);
+         if(user != null) {
+             user.setVorname(updatedUser.firstname());
+             user.setNachname(updatedUser.lastname());
+             user.setEmail(updatedUser.email());
+             user.setPassword(updatedUser.password());
+             user.setCreated(Date.valueOf(localDate));
+             user.setDeleted(false);
 
-        if(existingUser == null) {
-            return null;
-        }
 
-        return null;
+         }
+
+       return null;
     }
 
     public UserDTO fetchUserByEmail(String email) {
