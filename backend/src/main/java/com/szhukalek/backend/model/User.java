@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tb_user")
 public class User extends AbstractPersistable<Long> {
+
     private String vorname;
     private String nachname;
     private String email;

@@ -30,7 +30,6 @@
 
         <v-icon
           size="small"
-          @click="deleteItem(item)"
         >
           mdi-delete
         </v-icon>
@@ -39,7 +38,6 @@
       <template v-slot:no-data>
         <v-btn
           color="primary"
-          @click="initialize"
         >
           Reset
         </v-btn>
@@ -64,7 +62,11 @@
               multiple
               chips
             ></v-select>
-            <v-btn type="submit" color="primary">Änderungen speichern</v-btn>
+            <v-btn
+              type="submit"
+              color="primary"
+              @click="saveChanges"
+            >Änderungen speichern</v-btn>
           </v-form>
         </v-card-text>
       </v-card>
@@ -122,39 +124,6 @@ export default {
       this.selectedUser = selectedUser;
       this.editedUser = {...selectedUser};
       this.dialog = true;
-    },
-    saveChanges() {
-      // Hier kannst du die Änderungen speichern und den Dialog schließen
-      // Beispiel: HTTP-Anfrage an dein Backend, um die Daten zu aktualisieren
-      const updatedUser = {
-        id: this.selectedUser.id, // Annahme: Der Benutzer hat eine eindeutige ID
-        vorname: this.editedUser.vorname,
-        nachname: this.editedUser.nachname,
-        email: this.editedUser.email,
-        password: this.editedUser.password,
-        roles: this.editedUser.roles,
-      };
-
-      // Beispiel für Axios-Anfrage (du musst dies an deine API anpassen)
-      axios.put(`/users/update/${this.selectedUser.id}`, updatedUser)
-        .then(response => {
-          // Erfolgreiche Antwort vom Server
-          console.log(response.data);
-          this.dialog = false; // Schließe den Dialog nach erfolgreicher Aktualisierung
-        })
-        .catch(error => {
-          // Fehler bei der Anfrage
-          console.error(error);
-          // Handle den Fehler entsprechend (z.B. Fehlermeldung anzeigen)
-        });
-      this.dialog = false;
-    },
-
-    deleteItem(item) {
-      // Hier kannst du die Logik für das Löschen implementieren
-    },
-    initialize() {
-      // Hier kannst du die Logik für das Zurücksetzen implementieren
     },
   }
 }

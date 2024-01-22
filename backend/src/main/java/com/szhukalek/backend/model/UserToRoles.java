@@ -11,11 +11,17 @@ import lombok.*;
 @Table(name = "tb_user2rollen")
 public class UserToRoles {
 
-    @Id
+    @EmbeddedId
+    private UserToRolesId UserToRolesId = new UserToRolesId();
+
     @ManyToOne
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Id
+
     @ManyToOne
+    @MapsId("roleId")
+    @JoinColumn(name = "role_id")
     private Role role;
 }

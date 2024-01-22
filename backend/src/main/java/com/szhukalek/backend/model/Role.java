@@ -12,6 +12,10 @@ import java.util.List;
 @Setter
 @Table(name = "tb_rollen")
 public class Role extends AbstractPersistable<Long> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Enumerated(EnumType.STRING)
     private ERoles role;
 
