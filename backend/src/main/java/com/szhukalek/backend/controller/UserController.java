@@ -18,7 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000","http://127.0.0.1:3000"})
 public class UserController {
 
     private final UserService userService;
@@ -38,6 +38,11 @@ public class UserController {
     @PutMapping("update/{id}")
     public @ResponseStatus ResponseEntity<?> update(@PathVariable final Long id, @RequestBody UserDTO userDTO) {
         return userService.updateUser(id, userDTO);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public @ResponseStatus ResponseEntity<?> delete(@PathVariable final Long id) {
+        return userService.delete(id);
     }
 
 

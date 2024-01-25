@@ -26,12 +26,13 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private UserToRolesRepository userToRolesRepository;
+    private final RoleRepository roleRepository;
+    private final UserToRolesRepository userToRolesRepository;
 
     public List<UserDTO> fetchAllUsers() {
         return userRepository.findAll()
                 .stream()
+                .filter(user -> !user.getDeleted())
                 .map(UserDTO::fromEntity)
                 .toList();
 
@@ -98,4 +99,8 @@ public class UserService {
         return user != null ? UserDTO.fromEntity(user) : null;
     }
 
+    public ResponseEntity<?> delete(Long id) {
+        userRepository.findById(id).setDeleted(true);
+        return new ResponseEntity<>("OK", HttpStatusCode.valueOf(200));
+    }
 }

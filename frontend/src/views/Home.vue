@@ -19,7 +19,7 @@
       :items="users"
       :search="search"
     >
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:item.actions="{ item, index }">
         <v-icon
           size="small"
           class="me-2"
@@ -30,6 +30,7 @@
 
         <v-icon
           size="small"
+          @click="deleteUser(item, index)"
         >
           mdi-delete
         </v-icon>
@@ -51,8 +52,8 @@
         </v-card-title>
         <v-card-text>
           <v-form @submit.prevent="saveChanges">
-            <v-text-field v-model="editedUser.vorname" label="Vorname"></v-text-field>
-            <v-text-field v-model="editedUser.nachname" label="Nachname"></v-text-field>
+            <v-text-field v-model="editedUser.firstname" label="Vorname"></v-text-field>
+            <v-text-field v-model="editedUser.lastname" label="Nachname"></v-text-field>
             <v-text-field v-model="editedUser.email" label="E-Mail"></v-text-field>
             <v-text-field v-model="editedUser.password" label="Passwort" type="password"></v-text-field>
             <v-select
@@ -73,10 +74,6 @@
     </v-dialog>
   </v-card>
 </template>
-
-<script setup>
-import axios from "axios";
-</script>
 
 <script>
 import axios from "axios";
@@ -108,7 +105,7 @@ export default {
   },
   async mounted() {
     try {
-      const response = await axios.get("/users/all", {responseType: 'application/json'});
+      const response = await axios.get("/users/all", {responseType: "json"});
       if (response != null) {
         this.users = response.data;
         console.log(this.users, response)
@@ -125,6 +122,31 @@ export default {
       this.editedUser = {...selectedUser};
       this.dialog = true;
     },
+    saveChanges() {
+      const updatedUser = {
+        id: this.selectedUser.id,
+        firstname: this.editedUser.firstname,
+        lastname: this.editedUser.lastname,
+        email: this.editedUser.email,
+        password: this.editedUser.password,
+        roles: this.editedUser.roles,
+      };
+
+      axios.put(`/users/update/${this.selectedUser.id}`, updatedUser)
+        .then(response => {
+          console.log(response.data);
+          this.dialog = false;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+
+    deleteUser(item, index) {
+      axios.delete(`/users/delete/${item.id}`)
+      delete this.users[item.id];
+      this.users.splice(index, 1);
+    }
   }
 }
 </script>
